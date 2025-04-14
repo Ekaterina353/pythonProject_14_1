@@ -18,9 +18,17 @@ class Category:
         """
         self.name = name
         self.description = description
-        self.products = products
+        self.__products = products # Приватный атрибут списка товаров
         Category.category_count += 1
         Category.product_count += len(products)
 
+    @property
+    def products(self):
+        """Геттер для получения информации о товарах."""
+        result = ""
+        for product in self.__products:
+            result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+        return result
+
     def __str__(self):
-        return f"Category: {self.name}, Products: {len(self.products)}"
+        return f"Category: {self.name}, Products: {len(self.__products)}"
