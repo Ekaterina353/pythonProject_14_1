@@ -1,3 +1,4 @@
+
 class Product:
     """
     Класс, представляющий продукт.
@@ -17,18 +18,18 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    @property
+    def price(self):
+        """Геттер для получения цены."""
+        return self.__price
 
-
-@property
-def price(self):
-    """Геттер для получения цены."""
-    return self.__price
-
-
-@price.setter
-def price(self, new_price: float):
-    """Сеттер для установки цены с проверкой."""
-    if new_price > 0:
-        self.__price = new_price
-    else:
-        print("Цена не должна быть нулевая или отрицательная")
+    @price.setter
+    def price(self, new_price: float):
+        """Сеттер для установки цены с проверкой."""
+        if isinstance(new_price, (int, float)):  # Проверяем тип данных
+            if new_price > 0:
+                self.__price = new_price
+            else:
+                print("Цена не должна быть нулевая или отрицательная")
+        else:
+            print("Цена должна быть числом")
