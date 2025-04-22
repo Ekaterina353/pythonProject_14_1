@@ -2,25 +2,18 @@ from src.product import Product
 
 
 class Category:
-    """
-    Класс, представляющий категорию продуктов.
-    """
-    category_count = 0  # Атрибут класса: общее количество категорий
-    product_count = 0  # Атрибут класса: общее количество продуктов
-
-    def __init__(self, name: str, description: str, products: list[Product]):
-        """
-        Инициализация объекта Category.
-
-        :param name: Название категории.
-        :param description: Описание категории.
-        :param products: Список товаров в категории (объекты Product).
-        """
+    """Класс категории продуктов."""
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.products = products
-        Category.category_count += 1
-        Category.product_count += len(products)
+        self.products = []
+
+    def add_product(self, product):
+        """Добавление продукта в категорию с проверкой типа."""
+        if not isinstance(product, Product):
+            raise TypeError("Можно добавлять только объекты Product и его наследников.")
+        self.products.append(product)
 
     def __str__(self):
-        return f"Category: {self.name}, Products: {len(self.products)}"
+         product_list = "\n".join([str(product) for product in self.products])
+         return f"{self.name}, {self.description}\n{product_list}\n"
