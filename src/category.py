@@ -3,6 +3,7 @@ from src.product import Product
 
 class Category:
     """Класс категории продуктов."""
+
     def __init__(self, name, description):
         self.name = name
         self.description = description
@@ -15,5 +16,5 @@ class Category:
         self.products.append(product)
 
     def __str__(self):
-         product_list = "\n".join([str(product) for product in self.products])
-         return f"{self.name}, {self.description}\n{product_list}\n"
+        product_list = "\n".join([str(product) for product in self.products])
+        return f"{self.name}, {self.description}\n{product_list}\n"

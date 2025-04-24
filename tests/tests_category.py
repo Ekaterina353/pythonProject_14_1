@@ -1,15 +1,35 @@
 import pytest
-from main import Smartphone, LawnGrass
+from src.category import  Category
 
-def test_product_addition():
-    """Тест сложения продуктов одного класса."""
-    phone1 = Smartphone("Samsung", "хороший", 10000, 2, "Высокая", "S23", 256, "Black")
-    phone2 = Smartphone("Apple", "тоже хороший", 12000, 3, "Очень высокая", "iPhone 15", 512, "White")
-    assert phone1 + phone2 == 56000
 
-def test_product_addition_error():
-    """Тест на ошибку при сложении продуктов разных классов."""
-    phone = Smartphone("Samsung", "хороший", 10000, 2, "Высокая", "S23", 256, "Black")
-    grass = LawnGrass("Зеленая", "отличная", 500, 10, "Россия", "14 дней", "Зеленый")
+@pytest.fixture
+def sample_category():
+    """Фикстура для создания экземпляра Category."""
+    return Category("Test Category", "Category Description")
+
+
+def test_category_creation(sample_category):
+    """Проверка создания объекта Category."""
+    assert sample_category.name == "Test Category"
+    assert sample_category.description == "Category Description"
+    assert sample_category.products == []
+
+
+def test_category_add_product(sample_category, sample_product):
+    """Проверка добавления продукта в категорию."""
+    sample_category.add_product(sample_product)
+    assert len(sample_category.products) == 1
+    assert sample_category.products[0] == sample_product
+
+
+def test_category_add_invalid_product(sample_category):
+    """Проверка исключения при добавлении некорректного типа продукта."""
     with pytest.raises(TypeError):
-        phone + grass
+        sample_category.add_product("Not a Product")
+
+
+def test_category_string_representation(sample_category, sample_product):
+    """Проверка строкового представления Category."""
+    sample_category.add_product(sample_product)
+    expected_string = f"Test Category, Category Description\n{str(sample_product)}\n"
+    assert str(sample_category) == expected_string

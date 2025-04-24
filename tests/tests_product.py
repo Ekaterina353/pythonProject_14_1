@@ -1,16 +1,35 @@
 import pytest
-from main import Smartphone, LawnGrass, Category
+from main import LawnGrass
+from src.product import Product
 
 
-def test_category_add_product():
-    """Тест добавления продукта в категорию."""
-    category = Category("Телефоны", "Описание")
-    phone = Smartphone("Samsung", "хороший", 10000, 2, "Высокая", "S23", 256, "Black")
-    category.add_product(phone)
-    assert len(category.products) == 1
+@pytest.fixture
+def sample_product():
+    """Фикстура для создания экземпляра Product."""
+    return Product("Test Product", "Description", 100, 5)
 
-def test_category_add_product_error():
-    """Тест на ошибку при добавлении некорректного объекта в категорию."""
-    category = Category("Телефоны", "Описание")
+
+def test_product_creation(sample_product):
+    """Проверка создания объекта Product."""
+    assert sample_product.name == "Test Product"
+    assert sample_product.description == "Description"
+    assert sample_product.price == 100
+    assert sample_product.quantity == 5
+
+
+def test_product_addition(sample_product):
+    """Проверка сложения двух продуктов."""
+    product2 = Product("Another Product", "Desc", 50, 10)
+    assert sample_product.add(product2) == 100 * 5 + 50 * 10
+
+
+def test_product_addition_different_types(sample_product):
+    """Проверка исключения при сложении продуктов разных типов."""
+    lawn_grass = LawnGrass("Grass", "Desc", 20, 20, "Russia", "2 weeks", "Green")
     with pytest.raises(TypeError):
-        category.add_product("Строка")
+        sample_product.add(lawn_grass)
+
+
+def test_product_string_representation(sample_product):
+    """Проверка строкового представления Product."""
+    assert str(sample_product) == "Test Product, 100 руб. (Остаток: 5)"
