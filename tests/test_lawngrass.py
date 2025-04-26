@@ -1,27 +1,14 @@
-from src.product import Product
+from src.lawngrass import LawnGrass
 
 
-class LawnGrass(Product):
-    """Класс газонной травы, наследник Product."""
-
-    def __init__(self, name: str, description: str, price: float, quantity: int, country: str, germination_period: int,
-                 color: str):
-        """
-        Конструктор класса LawnGrass.
-
-        :param name: Название газонной травы.
-        :param description: Описание газонной травы.
-        :param price: Цена за единицу.
-        :param quantity: Количество в наличии.
-        :param country: Страна производитель.
-        :param germination_period: Срок прорастания (в днях).
-        :param color: Цвет травы.
-        """
-        super().__init__(name, description, price, quantity)
-        self.country = country
-        self.germination_period = germination_period
-        self.color = color
-
-    def __str__(self):
-        """Возвращает строковое представление объекта LawnGrass."""
-        return f"{super().__str__()}, Страна: {self.country}, Срок прорастания: {self.germination_period} дней, Цвет: {self.color}"
+def test_lawn_grass_creation(capsys):
+    """Тест создания объекта LawnGrass и атрибутов."""
+    grass = LawnGrass("Green Grass", "Good grass", 100, 10, "Ryegrass", "Green")
+    assert grass.name == "Green Grass"
+    assert grass.description == "Good grass"
+    assert grass.price == 100
+    assert grass.quantity == 10
+    assert grass.type_grass == "Ryegrass"
+    assert grass.color == "Green"
+    captured = capsys.readouterr()
+    assert "Создан объект класса LawnGrass" in captured.out
