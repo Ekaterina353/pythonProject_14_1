@@ -1,29 +1,15 @@
-from src.product import Product
+from src.smartphone import Smartphone
 
 
-class Smartphone(Product):
-    """Класс смартфона, наследник Product."""
-
-    def __init__(self, name: str, description: str, price: float, quantity: int, efficiency: str, model: str,
-                 memory: int, color: str):
-        """
-        Конструктор класса Smartphone.
-
-        :param name: Название смартфона.
-        :param description: Описание смартфона.
-        :param price: Цена.
-        :param quantity: Количество в наличии.
-        :param efficiency: Процессор.
-        :param model: Модель смартфона.
-        :param memory: Объем памяти (ГБ).
-        :param color: Цвет смартфона.
-        """
-        super().__init__(name, description, price, quantity)
-        self.efficiency = efficiency
-        self.model = model
-        self.memory = memory
-        self.color = color
-
-    def __str__(self):
-        """Возвращает строковое представление объекта Smartphone."""
-        return f"{super().__str__()}, Модель: {self.model}, Цвет: {self.color}"
+def test_smartphone_creation(capsys):
+    """Тест создания объекта Smartphone и атрибутов."""
+    phone = Smartphone("SuperPhone", "Cool phone", 500, 5, "High", "ModelX", 128)
+    assert phone.name == "SuperPhone"
+    assert phone.description == "Cool phone"
+    assert phone.price == 500
+    assert phone.quantity == 5
+    assert phone.performance == "High"
+    assert phone.model == "ModelX"
+    assert phone.memory == 128
+    captured = capsys.readouterr()
+    assert "Создан объект класса Smartphone" in captured.out
