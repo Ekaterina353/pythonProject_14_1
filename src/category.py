@@ -5,22 +5,40 @@ class Category:
     """
     Класс, представляющий категорию продуктов.
     """
-    category_count = 0  # Атрибут класса: общее количество категорий
-    product_count = 0  # Атрибут класса: общее количество продуктов
 
-    def __init__(self, name: str, description: str, products: list[Product]):
+    def __init__(self, name: str, description: str, products: list = None):
         """
-        Инициализация объекта Category.
+        Инициализация экземпляра класса Category.
 
-        :param name: Название категории.
-        :param description: Описание категории.
-        :param products: Список товаров в категории (объекты Product).
+        Args:
+            name (str): Название категории.
+            description (str): Описание категории.
+            products (list, optional): Список продуктов в категории. Defaults to None.
         """
         self.name = name
         self.description = description
-        self.products = products
-        Category.category_count += 1
-        Category.product_count += len(products)
+        self.products = products if products is not None else []
 
-    def __str__(self):
-        return f"Category: {self.name}, Products: {len(self.products)}"
+    def add_product(self, product: Product):
+        """
+        Добавляет продукт в категорию.
+
+        Args:
+            product (Product): Продукт для добавления.
+        """
+        self.products.append(product)
+
+    def average_price(self):
+        """
+        Вычисляет среднюю цену товаров в категории.
+
+        Returns:
+            float: Средняя цена товаров в категории. Возвращает 0, если категория пуста.
+        """
+        if not self.products:
+            return 0.0
+        try:
+            total_price = sum(product.price for product in self.products)
+            return total_price / len(self.products)
+        except ZeroDivisionError:
+            return 0.0

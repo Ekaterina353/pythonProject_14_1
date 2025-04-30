@@ -2,19 +2,26 @@ class Product:
     """
     Класс, представляющий продукт.
     """
+
     def __init__(self, name: str, description: str, price: float, quantity: int):
         """
-        Инициализация объекта Product.
+        Инициализация экземпляра класса Product.
 
-        :param name: Название продукта.
-        :param description: Описание продукта.
-        :param price: Цена продукта.
-        :param quantity: Количество продукта в наличии.
+        Args:
+            name (str): Название продукта.
+            description (str): Описание продукта.
+            price (float): Цена продукта.
+            quantity (int): Количество продукта.
+
+        Raises:
+            ValueError: Если количество товара равно нулю.
         """
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.name = name
         self.description = description
         self.price = price
         self.quantity = quantity
 
     def __str__(self):
-        return f"Product: {self.name}, Price: {self.price}, Quantity: {self.quantity}"
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
